@@ -1,0 +1,18 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "signup-flow"
+version = "0.1.0"
+description = "Validated signup processing pipeline"
+requires-python = ">=3.11"
+dependencies = [
+    "pydantic==2.9.2",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/signup_flow"]
+
+[tool.mypy]
+strict = true

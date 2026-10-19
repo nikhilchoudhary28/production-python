@@ -1,0 +1,6 @@
+[
+  {"email": "asha@example.com", "plan": "pro", "signup_date": "2026-07-01", "trial_days": 14},
+  {"email": "wei@example.com", "plan": "free", "signup_date": "2026-07-02"},
+  {"email": "farid@example.com", "plan": "enterprise", "signup_date": "2026-07-03", "trial_days": 30},
+  {"email": "priya@example.com", "plan": "pro", "signup_date": "2026-07-04", "trial_days": 14}
+]
