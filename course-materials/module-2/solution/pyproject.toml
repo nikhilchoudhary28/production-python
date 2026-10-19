@@ -11,6 +11,9 @@ dependencies = [
     "pydantic==2.9.2",
 ]
 
+[project.optional-dependencies]
+test = ["pytest"]
+
 [tool.hatch.build.targets.wheel]
 packages = ["src/signup_flow"]
 
