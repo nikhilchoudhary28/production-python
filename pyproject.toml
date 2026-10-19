@@ -9,6 +9,7 @@ description = "Production-grade Ingestion & Transformation Service"
 requires-python = ">=3.11"
 dependencies = [
     "click==8.1.7",
+    "pydantic==2.9.2",
 ]
 
 [project.scripts]
@@ -16,3 +17,6 @@ pipeline = "pipeline.cli:cli"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/pipeline"]
+
+[tool.mypy]
+strict = true

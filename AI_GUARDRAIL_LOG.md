@@ -45,9 +45,16 @@ elsewhere in the same file before accepting the diff.
 
 ---
 
-## Module 2 — Typing and code quality as a safety net
+## Module 2: Typing and Code Quality as a Safety Net
 
-*(Fill in after completing Module 2's AI-assisted round.)*
+### What was built
+- Pydantic boundary models (`IngestionRecord`, `RecordPayload`) enforcing data constraints (`Literal`, `datetime`, numeric types) on API records.
+- Configured project-wide `mypy` with `strict = true` in `pyproject.toml`.
+- Tested against live mock API records, cleanly isolating 3 corrupted records (null external_id, missing status, truncated fields) at ingestion.
+
+### AI Auditing & Guardrails Observed
+- **Unrequested Testing Framework Shift:** When asked to write tests, Copilot defaulted to `unittest.TestCase` instead of matching the project convention (`pytest`). Had to explicitly mandate `pytest` style assertions and fixtures.
+- **Incomplete Boundary Coverage:** The AI generated valid-case and upper-bound tests (`> 100`), but skipped lower-bound violations (`< 0`) and boundary-edge acceptance (`0` and `100`). Probed and enforced full parameterized edge-case coverage.
 
 ---
 
