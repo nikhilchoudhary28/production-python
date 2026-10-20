@@ -53,6 +53,11 @@ def fetch_rate(pair: str) -> float:
     return _RATES[pair]
 
 
+def fetch_historical_rate(pair: str, date: str) -> float:
+    """Fetch a historical rate; this simulator uses the configured rate for every date."""
+    return fetch_rate(pair)
+
+
 def reset() -> None:
     """Only for re-running the demo from a clean state."""
     _call_counts.clear()
