@@ -1,0 +1,16 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "fx-rates"
+version = "0.1.0"
+description = "Resilient currency conversion pipeline"
+requires-python = ">=3.11"
+dependencies = []
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/fx_rates"]
+
+[tool.mypy]
+strict = true
