@@ -58,9 +58,16 @@ elsewhere in the same file before accepting the diff.
 
 ---
 
-## Module 3 — Error handling, retries, resilience
+## Module 3: Error Handling, Retries, and Resilience
 
-*(Fill in after completing Module 3's AI-assisted round.)*
+### What was built
+- Classified exception hierarchy (`IngestionError`, `UpstreamTimeoutError`, `UpstreamRateLimitError`, `RecordValidationError`).
+- Generic `call_with_retry` runner implementing exponential backoff and randomized full jitter.
+- Clean separation of transient network/server errors from non-retryable validation failures.
+
+### AI Auditing & Guardrails Observed
+- **Result-Only Assertions:** Copilot initially wrote tests checking only the final return value without verifying `call_counts`. Probed and enforced asserting exact attempt counts to prove retries actually occurred.
+- **Missing Fast-Fail Coverage:** The assistant omitted verifying that non-retryable errors abort on attempt 1. Mandated negative test cases asserting `call_count == 1`.
 
 ---
 
