@@ -71,10 +71,14 @@ elsewhere in the same file before accepting the diff.
 
 ---
 
-## Module 4 — Idempotency and safe reprocessing
+## Module 4: Idempotency and Safe Reprocessing
 
-*(Fill in after completing Module 4's AI-assisted round.)*
+### What was built
+- Idempotent PostgreSQL writer (`src/pipeline/writer.py`) using `INSERT ... ON CONFLICT (external_id) DO UPDATE` against `warehouse.records`.
+- Executed back-to-back upsert tests against live PostgreSQL container, confirming 0 duplicate rows via SQL grouping.
 
+### AI Auditing & Guardrails Observed
+- **The Check-Then-Act (TOCTOU) Trap:** Caught the common AI antipattern where an assistant checks `SELECT ... FROM processed_events` followed by an `INSERT`. Disallowed application-level race windows and enforced single-statement atomic uniqueness (`ON CONFLICT DO NOTHING / UPDATE`) directly in the database engine.
 ---
 
 ## Module 5 — Testing data pipelines, not just functions
