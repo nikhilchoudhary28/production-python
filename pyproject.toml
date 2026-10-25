@@ -21,3 +21,22 @@ packages = ["src/pipeline"]
 
 [tool.mypy]
 strict = true
+
+[tool.ruff]
+line-length = 88
+exclude = [
+    "course-materials",
+    ".venv",
+    "build",
+    "dist",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+norecursedirs = [
+    "course-materials",
+    ".venv",
+    "build",
+    "dist",
+]

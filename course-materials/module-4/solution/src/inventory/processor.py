@@ -1,5 +1,6 @@
 """Idempotent batch processor for warehouse adjustments."""
 
+from collections.abc import Sequence
 from datetime import datetime, timezone
 import sqlite3
 from typing import TypedDict
@@ -9,6 +10,12 @@ class Adjustment(TypedDict):
     adjustment_id: str
     sku: str
     quantity_delta: int
+
+
+class Recount(TypedDict):
+    recount_id: str
+    sku: str
+    quantity: int
 
 
 def apply_adjustment(conn: sqlite3.Connection, adjustment: Adjustment) -> bool:
@@ -47,14 +54,48 @@ def apply_adjustment(conn: sqlite3.Connection, adjustment: Adjustment) -> bool:
     return True
 
 
+def apply_recount(conn: sqlite3.Connection, recount: Recount) -> bool:
+    """Atomically records the recount ID. If new, sets the inventory quantity."""
+    cursor = conn.cursor()
+    now = datetime.now(timezone.utc).isoformat()
+
+    cursor.execute(
+        """
+        INSERT INTO processed_recounts (recount_id, processed_at)
+        VALUES (?, ?)
+        ON CONFLICT (recount_id) DO NOTHING
+        """,
+        (recount["recount_id"], now),
+    )
+
+    if cursor.rowcount == 0:
+        conn.commit()
+        return False
+
+    cursor.execute(
+        """
+        INSERT INTO inventory (sku, quantity)
+        VALUES (?, ?)
+        ON CONFLICT (sku) DO UPDATE SET quantity = excluded.quantity
+        """,
+        (recount["sku"], recount["quantity"]),
+    )
+    conn.commit()
+    return True
+
+
 def apply_batch(
-    conn: sqlite3.Connection, adjustments: list[Adjustment]
+    conn: sqlite3.Connection, adjustments: Sequence[Adjustment | Recount]
 ) -> tuple[int, int]:
-    """Processes a list of adjustments, returning (applied_count, skipped_count)."""
+    """Processes adjustments and recounts, returning applied and skipped counts."""
     applied = 0
     skipped = 0
     for adj in adjustments:
-        if apply_adjustment(conn, adj):
+        if "recount_id" in adj:
+            was_applied = apply_recount(conn, adj)
+        else:
+            was_applied = apply_adjustment(conn, adj)
+        if was_applied:
             applied += 1
         else:
             skipped += 1

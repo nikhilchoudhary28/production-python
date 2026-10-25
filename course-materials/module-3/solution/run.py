@@ -18,7 +18,7 @@ def main() -> None:
         try:
             rate = get_rate(pair)
             results[pair] = rate
-            print(f"  ok: {pair} = {rate}")
+            print(f"  ok: {pair} = {rate}") 
         except RateServiceError as exc:
             dead_letter.add(pair, str(exc))
             print(f"  [DEAD-LETTER] {pair}: {exc}")

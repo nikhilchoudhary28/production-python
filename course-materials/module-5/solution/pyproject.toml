@@ -1,0 +1,16 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "discounts"
+version = "0.1.0"
+description = "Coupon redemption service with a real, layered test suite"
+requires-python = ">=3.11"
+dependencies = []
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/discounts"]
+
+[tool.mypy]
+strict = true

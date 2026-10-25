@@ -6,7 +6,6 @@ import click
 @click.group()
 def cli() -> None:
     """pipeline - Production-grade ingestion and transformation service."""
-    pass
 
 
 @cli.command()

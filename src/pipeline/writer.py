@@ -2,7 +2,9 @@
 
 import json
 from typing import Any
+
 import psycopg
+
 from pipeline.models import IngestionRecord
 
 DATABASE_URL = "postgresql://pipeline_user:pipeline_pass_local_only@localhost:5432/warehouse"

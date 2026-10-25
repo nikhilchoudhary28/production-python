@@ -23,6 +23,12 @@ def get_connection(db_path: str = "warehouse.db") -> sqlite3.Connection:
             processed_at TEXT NOT NULL
         )
     """)
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS processed_recounts (
+            recount_id TEXT PRIMARY KEY,
+            processed_at TEXT NOT NULL
+        )
+    """)
     conn.commit()
     return conn
 

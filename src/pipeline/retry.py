@@ -2,7 +2,8 @@
 
 import random
 import time
-from typing import Callable, TypeVar
+from collections.abc import Callable
+from typing import TypeVar
 
 from pipeline.exceptions import UpstreamRateLimitError, UpstreamTimeoutError
 
@@ -28,9 +29,9 @@ def call_with_retry(
         attempt += 1
         try:
             return func()
-        except RETRYABLE_EXCEPTIONS as exc:
+        except RETRYABLE_EXCEPTIONS:
             if attempt >= max_attempts:
-                raise exc
+                raise
 
             # Exponential backoff capped at max_delay
             backoff = min(max_delay, base_delay * (2 ** (attempt - 1)))
