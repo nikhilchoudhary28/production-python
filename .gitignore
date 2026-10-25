@@ -12,3 +12,18 @@ build/
 # macOS metadata
 .DS_Store
 */.DS_Store
+
+# Virtual environments
+.venv/
+*/.venv/
+
+# Caches & build artifacts
+__pycache__/
+*/__pycache__/
+*.egg-info/
+*/*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+build/
+dist/

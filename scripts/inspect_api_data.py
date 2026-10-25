@@ -2,7 +2,9 @@
 
 import json
 import urllib.request
+
 from pydantic import ValidationError
+
 from pipeline.models import IngestionRecord
 
 
